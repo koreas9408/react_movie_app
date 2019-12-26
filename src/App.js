@@ -6,48 +6,31 @@ import PropTypes from "prop-types";
 // JSX = JavaScript + XML ( HTML )
 // prop의 이름과 인지값의 이름은 같아야한다.
 
-function Movie({ name, rating }) {
-  return (
-    <div>
-      <h2>I like {name} </h2>
-      <h4>{rating} / 5</h4>
-    </div>
-  );
-}
-
-const movieLike = [
-  {
-    id: 1,
-    name: "Hello",
-    rating: 5
-  },
-  {
-    id: 2,
-    name: "JSX",
-    rating: 3
-  },
-  {
-    id: 3,
-    name: "React",
-    rating: 2
+class App extends React.Component {
+  state = {
+    // 내가 바꿀 데이터를 state에 넣는다.
+    count: 0
+  };
+  add = () => {
+    console.log("add");
+    this.setState(current => ({ count: current.count + 1 }));
+  };
+  minus = () => {
+    console.log("minus");
+    this.setState(current => ({ count: current.count - 1 }));
+  };
+  // React는 state를 직접 접근하는 것을 허락하지 않는다 ( render 하지 않음 ! )
+  // setState 메소드를 이용해서 state에 접근하면 React는 새로운 state 데이터를 가지고 새롭게 render 한다. ( 해당 변경된 부분만 ! awesome!)
+  // 그리고 React는 현재 state에 접근하기 쉽게 current를 제공
+  render() {
+    return (
+      <div>
+        <h2>The number is : {this.state.count}</h2>
+        <button onClick={this.add}>Add</button>
+        <button onClick={this.minus}>Minus</button>
+      </div>
+    );
   }
-];
-
-Movie.propTypes = {
-  name: PropTypes.string.isRequired,
-  rating: PropTypes.number.isRequired
-};
-function App() {
-  return (
-    <div>
-      {movieLike.map(item => (
-        <Movie key={item.id} name={item.name} rating={item.rating} />
-      ))}
-      {/* <Movie fav="react" />
-      <Movie fav="JSX" /> */}
-      {/* 주석 신기하네 .. 데이터는 다른 서버에서 받아오기 때문에 수동으로 컴포넌트를 생성하는것은 좋지 않다. */}
-    </div>
-  );
 }
 
 export default App;
